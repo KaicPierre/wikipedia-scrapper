@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DB:str
     DATABASE_URL: str
-    OPENAI_API_KEY: str
-    MODEL: AiEnum 
+    OPENAI_API_KEY: str = 'not-needed-for-ollama'
+    MODEL: AiEnum = AiEnum.OLLAMA 
 
     model_config = SettingsConfigDict(
         env_file='.env',

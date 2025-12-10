@@ -7,7 +7,6 @@ from langchain_ollama import ChatOllama
 
 os.environ["OPENAI_API_KEY"] = settings.OPENAI_API_KEY
 
-
 class Summarizer(): 
   def summarize(self, data: str, word_count: int) -> str:
     
@@ -17,14 +16,14 @@ class Summarizer():
       model = init_chat_model(model="gpt-4.1")
     
     system_msg = SystemMessage(
-        "Você é um assistente especializado em criar resumos concisos e precisos de artigos da Wikipedia. "
-        "Suas respostas devem ser em texto corrido, sem formatação markdown, listas ou marcadores. "
+        "Você é um assistente especializado em criar resumos breves, concisos e precisos de artigos da Wikipedia. "
+        "Suas respostas devem ser em texto corrido, sem qualquer formatação, apenas texto "
         "Mantenha a objetividade e inclua apenas as informações mais relevantes. "
         "Respeite estritamente o limite de palavras especificado pelo usuário."
     )
     human_msg = HumanMessage(
-        f"Crie um resumo do seguinte artigo da Wikipedia em exatamente {word_count} palavras ou menos. "
-        f"Foque nos pontos principais e mantenha a clareza.\n\n"
+        f"Crie um breve resumo do seguinte artigo da Wikipedia em exatamente {word_count} palavras ou menos. "
+        f"Foque nos pontos principais, mantenha a clareza e acima de tudo seja breve, jamais ultrapasse o limite de palavras\n\n"
         f"Conteúdo do artigo:\n{data}"
     )
     

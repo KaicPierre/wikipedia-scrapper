@@ -15,6 +15,9 @@ class Scrapper():
     paragraphs = soup.find_all('p')
     text = ' '.join([p.get_text() for p in paragraphs])
     
+    if(text.__contains__("A Wikipédia não possui um artigo com este nome exato")):
+      raise ValueError("There is wikipedia page for this link")
+
     return text
   
   def validate_url(self, url:str): 
