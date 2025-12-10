@@ -11,7 +11,8 @@ class Summarizer():
   def summarize(self, data: str, word_count: int) -> str:
     
     if(settings.MODEL == "OLLAMA"):
-      model = ChatOllama(model="llama3.2", temperature=0)
+      ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+      model = ChatOllama(model="mistral", temperature=0, base_url=ollama_base_url)
     else:
       model = init_chat_model(model="gpt-4.1")
     
