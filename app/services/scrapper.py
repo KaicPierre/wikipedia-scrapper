@@ -19,3 +19,6 @@ class Scrapper():
   
   def validate_url(self, url:str): 
     return url.startswith("https://pt.wikipedia.org/wiki/")
+  
+  def create_url(self, page_name: str):
+    return f"https://pt.wikipedia.org/wiki/{page_name}"

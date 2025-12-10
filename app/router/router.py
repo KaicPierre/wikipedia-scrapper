@@ -11,13 +11,20 @@ from app.repositories.summary import SummaryRepository
 
 router = APIRouter(prefix='/summary', tags=['Summary'])
 
-@router.get('/')
-def get_summary():
-	return {"message": "Summary endpoint"}
-
-@router.get('/{url}')
-def get_summary_by_url():
-	return {"message": "Summary endpoint by URL"}
+@router.get('/{page_name}')
+def get_summary_by_url(page_name: str, db: Session = Depends(get_db)):
+    try:
+        url = Scrapper().create_url(page_name)
+        repo = SummaryRepository(db)
+        existing = repo.get_by_url(url)
+        if existing:
+            return {"summary": existing.summary_data}
+        else:
+            raise ValueError("There is no Summary for this URL")
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.post('/')
 def summarize(data: CreateSummaryRequest, db: Session = Depends(get_db)):
