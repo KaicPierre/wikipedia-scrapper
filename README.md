@@ -93,7 +93,11 @@ docker compose up db -d
 ```
 
 #### 5. (Opcional) Configure o Ollama
-Se você escolheu usar Ollama localmente:
+Se você escolheu usar Ollama localmente adicione as envs:
+```env
+MODEL=OLLAMA
+OPENAI_API_KEY=not-needed
+```
 
 **Instale o Ollama:**
 ```bash
