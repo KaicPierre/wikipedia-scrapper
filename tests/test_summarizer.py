@@ -26,7 +26,7 @@ class TestSummarizer:
         
         # Assert
         assert result == "Este é um resumo do artigo."
-        mock_chat_ollama.assert_called_once_with(model="llama3.2", temperature=0)
+        mock_chat_ollama.assert_called_once_with(model="mistral", temperature=0)
         mock_model.invoke.assert_called_once()
     
     @patch('app.services.summarizer.init_chat_model')
@@ -48,7 +48,7 @@ class TestSummarizer:
         
         # Assert
         assert result == "Este é um resumo gerado pelo GPT."
-        mock_init_chat_model.assert_called_once_with(model="gpt-4.1")
+        mock_init_chat_model.assert_called_once_with(model="gpt-4.1", max_tokens=word_count)
         mock_model.invoke.assert_called_once()
     
     @patch('app.services.summarizer.ChatOllama')
