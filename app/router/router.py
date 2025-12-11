@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 
-from app.schemas.summary import CreateSummaryRequest
+from app.schemas.summary import CreateSummaryRequest, SummaryResponseData
 from sqlalchemy.orm import Session
 from app.database.connection import get_db
 
@@ -11,7 +11,11 @@ from app.repositories.summary import SummaryRepository
 
 router = APIRouter(prefix='/summary', tags=['Summary'])
 
-@router.get('/{page_name}')
+@router.get( '/{page_name}',
+    response_model=SummaryResponseData,
+    status_code=status.HTTP_200_OK,
+    summary="Buscar resumo existente",
+    )
 def get_summary_by_url(page_name: str, db: Session = Depends(get_db)):
     try:
         url = Scrapper().create_url(page_name)
@@ -26,7 +30,11 @@ def get_summary_by_url(page_name: str, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post('/')
+@router.post('/',
+    response_model=SummaryResponseData,
+    status_code=status.HTTP_200_OK,
+    summary="Criar resumo baseado na URL",
+    )
 def summarize(data: CreateSummaryRequest, db: Session = Depends(get_db)):
     try:
         repo = SummaryRepository(db)
@@ -39,7 +47,7 @@ def summarize(data: CreateSummaryRequest, db: Session = Depends(get_db)):
         summary = Summarizer().summarize(data=page, word_count=data.word_count)
         new_summary = repo.create(data.url, summary)
 
-        return {"message": new_summary.summary_data}
+        return {"summary": new_summary.summary_data}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
