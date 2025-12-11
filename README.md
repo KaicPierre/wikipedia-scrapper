@@ -252,6 +252,10 @@ O Ollama tem **performance significativamente reduzida** quando executado dentro
 
 **Recomendação para produção**: Use OpenAI API ou configure o Ollama em uma máquina dedicada com recursos adequados.
 
+### Escolha do Modelo
+A rota que traz o resumo baseado na URL, por ser um GET, não possui body. Portanto foi feita uma adequação no pedido inicial, tendo em vista que todas as URLs da wikipedia seguem o mesmo formato, foi passado apenas o nome da pagina na URL, conforme o exemplo: `http://localhost:8000/summary/Pelé` que traria o resumo da página `https://pt.wikipedia.org/wiki/Pelé`
+
+
 ### Uso de IA no Desenvolvimento
 Este projeto utilizou assistência de IA (GitHub Copilot) em:
 - ✅ Geração de testes unitários (revisados e validados)
