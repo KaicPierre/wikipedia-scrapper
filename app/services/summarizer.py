@@ -11,10 +11,9 @@ class Summarizer():
   def summarize(self, data: str, word_count: int) -> str:
     
     if(settings.MODEL == "OLLAMA"):
-      ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-      model = ChatOllama(model="mistral", temperature=0, base_url=ollama_base_url)
+      model = ChatOllama(model="mistral", temperature=0)
     else:
-      model = init_chat_model(model="gpt-4.1")
+      model = init_chat_model(model="gpt-4.1", max_tokens= word_count)
     
     system_msg = SystemMessage(
         "Você é um assistente especializado em criar resumos breves, concisos e precisos de artigos da Wikipedia. "
