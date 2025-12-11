@@ -89,7 +89,7 @@ uv sync
 #### 4. Configure o PostgreSQL
 Certifique-se de que o PostgreSQL está rodando e crie o banco de dados:
 ```bash
-createdb wikipedia_db
+docker compose up db -d
 ```
 
 #### 5. (Opcional) Configure o Ollama
